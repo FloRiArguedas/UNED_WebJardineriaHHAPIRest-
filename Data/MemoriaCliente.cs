@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using P2_FloricelaArguedas_WebApplication.Models;
 
 namespace P2_FloricelaArguedas_WebApplication.Data
@@ -7,7 +8,7 @@ namespace P2_FloricelaArguedas_WebApplication.Data
     {
         public static IList<Cliente> listadeClientes = new List<Cliente>();
 
-        // GETALL: ClienteController
+        // GET: ClienteController
         public static IList<Cliente> Index()  //FUNCION PARA EL INDEX
         {
             if (!listadeClientes.Any())

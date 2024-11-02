@@ -31,3 +31,4 @@ C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P2\P2-FloricelaArguedas-WebAp
 C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P2\P2-FloricelaArguedas-WebApplication\obj\Debug\net7.0\P2-FloricelaArguedas-WebApplication.pdb
 C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P2\P2-FloricelaArguedas-WebApplication\obj\Debug\net7.0\P2-FloricelaArguedas-WebApplication.genruntimeconfig.cache
 C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P2\P2-FloricelaArguedas-WebApplication\obj\Debug\net7.0\ref\P2-FloricelaArguedas-WebApplication.dll
+C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P2\P2-FloricelaArguedas-WebApplication\obj\Debug\net7.0\P2-FloricelaArguedas-WebApplication.sourcelink.json
