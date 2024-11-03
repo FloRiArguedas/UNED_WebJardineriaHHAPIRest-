@@ -36,7 +36,7 @@ namespace P2_FloricelaArguedas_WebApplication.Data
         }
 
         // GET: MantenimientoController/Details/5
-        public static Mantenimiento SearchOne(int id)
+        public static Mantenimiento SearchOne(int Id)
         {
             if (!listadeMantenimientos.Any())
             {
@@ -44,10 +44,10 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                 throw new ArgumentNullException("En este momento no existen Mantenimientos");
                 
             }
-            Mantenimiento MantenimientoALeer = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == id);
+            Mantenimiento MantenimientoALeer = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == Id);
             if (MantenimientoALeer == null) 
             {
-                throw new KeyNotFoundException($"No se encontró Mantenimiento con el ID {id}.");
+                throw new KeyNotFoundException($"No se encontró Mantenimiento con el ID {Id}.");
             }
             return (MantenimientoALeer);
         }
