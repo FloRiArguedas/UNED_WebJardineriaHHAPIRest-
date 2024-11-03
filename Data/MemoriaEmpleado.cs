@@ -71,7 +71,7 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: EmpleadoController/Editar UPDATE
 
-        public static Empleado Edit(Empleado EmpleadoActualizado)
+        public static Empleado Editar(Empleado EmpleadoActualizado)
         {
             try
             {

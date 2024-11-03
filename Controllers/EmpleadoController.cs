@@ -1,43 +1,89 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using P2_FloricelaArguedas_WebApplication.Models;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace P2_FloricelaArguedas_WebApplication.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Empleado")]
     [ApiController]
     public class EmpleadoController : ControllerBase
     {
         // GET: api/<EmpleadoController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("Index/")]
+        public ActionResult <IList<Empleado>> Index()
         {
-            return new string[] { "value1", "value2" };
+            try 
+            {
+                IList<Empleado> listaEmpleados = new List<Empleado>();
+                listaEmpleados = Data.MemoriaEmpleado.Index();
+                return Ok(listaEmpleados);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // GET api/<EmpleadoController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetOne/{id}")]
+        public ActionResult<Empleado> ObtenerEmpleado (int id)
         {
-            return "value";
+            try 
+            { 
+                Empleado EmpleadoEncontrado = Data.MemoriaEmpleado.SearchOne(id);
+                return Ok(EmpleadoEncontrado);
+            } 
+            catch 
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/<EmpleadoController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("Create/")]
+        public ActionResult<Empleado> Create([FromBody] Empleado EmpleadoNuevo)
         {
+            try 
+            {
+                Empleado NewEmployee = Data.MemoriaEmpleado.Create(EmpleadoNuevo);
+                return Ok(NewEmployee);
+            } 
+            catch 
+            {
+                return BadRequest();
+            }
         }
 
         // PUT api/<EmpleadoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("Editar/")]
+        public ActionResult<Empleado> Editar([FromBody] Empleado EmpleadoEditado)
         {
+            try 
+            {
+                Empleado EmpleadoActualizado = Data.MemoriaEmpleado.Editar(EmpleadoEditado);
+                return Ok(EmpleadoActualizado);
+            }
+            catch 
+            {   
+                return BadRequest();
+            }
         }
 
         // DELETE api/<EmpleadoController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("Delete/{id}")]
+        public ActionResult Delete(int id)
         {
+            try 
+            {
+                Data.MemoriaEmpleado.Delete(id);
+                return Ok();
+            } 
+            catch 
+            {
+                return BadRequest();
+            }
         }
     }
 }
