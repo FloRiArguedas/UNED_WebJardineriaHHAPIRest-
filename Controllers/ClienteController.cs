@@ -109,5 +109,28 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
                 return BadRequest();
             }
         }
+
+
+
+        // GET: api/<ClienteController>
+        [HttpGet("ReporteMesesAtrasados/")]
+        public ActionResult<IList<Cliente>> ReporteMesesAtrasados()
+        {
+            try
+            {
+                IList<Mantenimiento> listaMantenimientos = new List<Mantenimiento>();
+                listaMantenimientos = Data.MemoriaMantenimiento.Index();
+
+                IList<Cliente> listaClientesRM = new List<Cliente>();
+                listaClientesRM = Data.MemoriaCliente.GetReportMonth(listaMantenimientos);
+                return Ok(listaClientesRM);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }
+
+

@@ -115,6 +115,26 @@
   },
   {
     "ContainingType": "P2_FloricelaArguedas_WebApplication.Controllers.ClienteController",
+    "Method": "ReporteMesesAtrasados",
+    "RelativePath": "api/Cliente/ReporteMesesAtrasados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Cliente, P2-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "P2_FloricelaArguedas_WebApplication.Controllers.ClienteController",
     "Method": "ReporteSemanal",
     "RelativePath": "api/Cliente/ReporteSemanal",
     "HttpMethod": "GET",

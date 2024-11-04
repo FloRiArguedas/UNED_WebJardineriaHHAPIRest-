@@ -130,7 +130,28 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                 }
             }
             return listadeClientesReporteSemana;
-           }
+        }
+
+
+        // GET: ClienteController
+        public static IList<Cliente> GetReportMonth(IList<Mantenimiento> listaMantenimientos)
+        {
+            IList<Cliente> listadeClientesReporteAtrasados = new List<Cliente>();
+
+            foreach (var mantenimiento in listaMantenimientos)
+            {
+
+                DateOnly FechaActual = DateOnly.FromDateTime(DateTime.Now); //Obtengo la fecha actual en ejecución
+                TimeSpan tiempotranscurrido = FechaActual.ToDateTime(TimeOnly.MinValue) - mantenimiento.FechaEjecutado; //Resta de las fechas
+
+                if ((int)tiempotranscurrido.TotalDays >= 60)
+                {
+                    Cliente ClienteSinServicio = SearchOne(mantenimiento.IdCliente);
+                    listadeClientesReporteAtrasados.Add(ClienteSinServicio);
+                }
+            }
+            return listadeClientesReporteAtrasados;
+        }
     }
 }
 
