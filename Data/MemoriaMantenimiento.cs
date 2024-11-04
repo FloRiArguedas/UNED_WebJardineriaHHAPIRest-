@@ -110,11 +110,40 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
             int CostoTotal = (((MantenimientoNuevo.m2Propiedad + MantenimientoNuevo.m2CercaViva) * MantenimientoNuevo.CostoChapiaM2) +
                               ((MantenimientoNuevo.m2Propiedad + MantenimientoNuevo.m2CercaViva) * MantenimientoNuevo.CostoProductoM2));
-            MantenimientoNuevo.CostoTotalMantenimiento = CostoTotal + (CostoTotal * 0.13);
+            double CostoTotalconIVA = CostoTotal + (CostoTotal * 0.13);
+            double CostoTotalconDescuento;
+
+            //SWITCH PARA MANEJAR LOS DESCUENTOS
+
+            switch (MantenimientoNuevo.m2Propiedad) 
+            {
+
+                case int m2Propiedad when (m2Propiedad >= 400 && m2Propiedad <= 900):
+                    CostoTotalconDescuento = CostoTotalconIVA - (CostoTotalconIVA * 0.02); //Descuento del 2%
+                    break;
+
+                case int m2Propiedad when (m2Propiedad >= 901 && m2Propiedad <= 1500):
+                    CostoTotalconDescuento = CostoTotalconIVA - (CostoTotalconIVA * 0.03); //Descuento del 3%
+                    break;
+
+                case int m2Propiedad when (m2Propiedad >= 1501 && m2Propiedad <= 2000):
+                    CostoTotalconDescuento = CostoTotalconIVA - (CostoTotalconIVA * 0.04); //Descuento del 4%
+                    break;
+
+                case int m2Propiedad when (m2Propiedad > 2000):
+                    CostoTotalconDescuento = CostoTotalconIVA - (CostoTotalconIVA * 0.05); //Descuento del 5%
+                    break;
+
+                default:
+                    CostoTotalconDescuento = CostoTotalconIVA; // Mantengo el precio sin descuento.
+                    break;
+            }
+
+            //Envio el precio al atributo del mantenimiento
+                MantenimientoNuevo.CostoTotalMantenimiento = CostoTotalconDescuento;
         }
-
-
-
+            
+        
         // POST: MantenimientoController/Create
 
         public static Mantenimiento Create(Mantenimiento MantenimientoNuevo)

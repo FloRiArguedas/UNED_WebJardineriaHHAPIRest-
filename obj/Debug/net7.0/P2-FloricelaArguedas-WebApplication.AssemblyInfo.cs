@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("P2-FloricelaArguedas-WebApplication")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79717c48b48aba39d4d489845841cf0f7e5b78a9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d4718b95ce91641b2f3e8dd786064e1c956f099")]
 [assembly: System.Reflection.AssemblyProductAttribute("P2-FloricelaArguedas-WebApplication")]
 [assembly: System.Reflection.AssemblyTitleAttribute("P2-FloricelaArguedas-WebApplication")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
