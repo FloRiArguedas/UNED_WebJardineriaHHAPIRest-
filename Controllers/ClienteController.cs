@@ -90,5 +90,24 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
                 return BadRequest();
             }
         }
+
+        // GET: api/<ClienteController>
+        [HttpGet("ReporteSemanal/")]
+        public ActionResult<IList<Cliente>> ReporteSemanal()
+        {
+            try
+            {
+                IList<Mantenimiento> listaMantenimientos = new List<Mantenimiento>();
+                listaMantenimientos = Data.MemoriaMantenimiento.Index();
+
+                IList<Cliente> listaClientesRW = new List<Cliente>();
+                listaClientesRW = Data.MemoriaCliente.GetReportWeek(listaMantenimientos);
+                return Ok(listaClientesRW);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

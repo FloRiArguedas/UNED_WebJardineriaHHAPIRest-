@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using P2_FloricelaArguedas_WebApplication.Models;
+using System.Collections.Generic;
 
 namespace P2_FloricelaArguedas_WebApplication.Data
 {
@@ -110,6 +111,26 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                 return;
             }
         }
+
+
+        // GET: ClienteController
+        public static IList<Cliente> GetReportWeek(IList<Mantenimiento> listaMantenimientos)  
+        {
+            DateTime FechaHoy = DateTime.Now;
+            DateTime FechaSemanaEntrante = FechaHoy.AddDays(8);
+
+            IList<Cliente> listadeClientesReporteSemana = new List<Cliente>() ;
+
+            foreach (var mantenimiento in listaMantenimientos) 
+            {
+                if (FechaHoy <= mantenimiento.FechaAgendado  &&  FechaSemanaEntrante >= mantenimiento.FechaAgendado)
+                {
+                    Cliente ClienteAgendado = SearchOne(mantenimiento.IdCliente);
+                    listadeClientesReporteSemana.Add(ClienteAgendado);
+                }
+            }
+            return listadeClientesReporteSemana;
+           }
     }
 }
 
