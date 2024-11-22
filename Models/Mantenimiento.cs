@@ -2,7 +2,7 @@
 {
     public class Mantenimiento
     {
-        public int IdMantenimiento { get; set; }
+        public int Id { get; set; }
 
         public int IdCliente { get; set; }
 
@@ -34,6 +34,6 @@
         public int CostoProductoM2 { get; set; }
 
         //CAMPO AUTOCALCULADO
-        public double CostoTotalMantenimiento { get; set; }
+        public float CostoTotalMantenimiento { get; set; }
     }
 }

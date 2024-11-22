@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using P2_FloricelaArguedas_WebApplication.Models;
 using System.Collections.Generic;
 
@@ -7,11 +8,26 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 {
     public class MemoriaCliente
     {
-        public static IList<Cliente> listadeClientes = new List<Cliente>();
+        private BDContexto ContextoBaseDatos;
 
-        // GET: ClienteController
-        public static IList<Cliente> Index()  //FUNCION PARA EL INDEX
+        public MemoriaCliente(BDContexto ctxt)
         {
+            ContextoBaseDatos = ctxt ?? throw new ArgumentNullException(nameof(ctxt));
+        }
+
+        //Obtengo la lista de la base de datos
+
+        public IList<Cliente> ObtenerLista()  
+        {
+            var listaLeida = from c in ContextoBaseDatos.Cliente select c;
+            return listaLeida.ToList();
+        }
+
+         
+        // GET: ClienteController
+        public IList<Cliente> Index()  //FUNCION PARA EL INDEX
+        {
+            IList<Cliente> listadeClientes = ObtenerLista();
             if (!listadeClientes.Any())
             {
                 Cliente cliente = new Cliente
@@ -32,8 +48,9 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
 
     
-        public static Cliente SearchOne(int id)
+        public  Cliente SearchOne(int id)
         {
+            IList<Cliente> listadeClientes = ObtenerLista();
             if (listadeClientes.Any())
             { 
                 Cliente clienteAbuscar = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
@@ -48,7 +65,7 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: ClienteController/Create
        
-        public static Cliente Create(Cliente clienteNuevo)
+        public Cliente Create(Cliente clienteNuevo)
         {
             try
             {
@@ -56,7 +73,8 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                 {
                     return null;
                 }
-                listadeClientes.Add(clienteNuevo);
+                ContextoBaseDatos.Cliente.Add(clienteNuevo);
+                ContextoBaseDatos.SaveChanges();
                 return (clienteNuevo);
             }
             catch
@@ -69,8 +87,9 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: ClienteController/Edit/
       
-        public static Cliente Editar(Cliente clienteEditado)
+        public Cliente Editar(Cliente clienteEditado)
         {
+            IList<Cliente> listadeClientes = ObtenerLista();
             try
             {
                 if (listadeClientes.Any())
@@ -83,6 +102,10 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                     clienteaEditar.DireccionExacta = clienteEditado.DireccionExacta;
                     clienteaEditar.MantenimientoInvierno = clienteEditado.MantenimientoInvierno;
                     clienteaEditar.MantenimientoVerano = clienteEditado.MantenimientoVerano;
+
+                    ContextoBaseDatos.Cliente.Update(clienteaEditar);
+                    ContextoBaseDatos.SaveChanges();
+
                     return clienteaEditar;
                 }
                 return null;
@@ -96,14 +119,16 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: ClienteController/Delete/
 
-        public static void Delete (int id)
+        public void Delete (int id)
         {
+            IList<Cliente> listadeClientes = ObtenerLista();
             try
             {
                 Cliente clienteAEliminar = listadeClientes.FirstOrDefault(cliente => cliente.Id == id);
                 if (clienteAEliminar != null)
                 {
-                    listadeClientes.Remove(clienteAEliminar);
+                    ContextoBaseDatos.Cliente.Remove(clienteAEliminar);
+                    ContextoBaseDatos.SaveChanges();
                 }
             }
             catch
@@ -114,7 +139,7 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
 
         // GET: ClienteController
-        public static IList<Cliente> GetReportWeek(IList<Mantenimiento> listaMantenimientos)  
+        public IList<Cliente> GetReportWeek(IList<Mantenimiento> listaMantenimientos)  
         {
             DateTime FechaHoy = DateTime.Now;
             DateTime FechaSemanaEntrante = FechaHoy.AddDays(8);
@@ -134,7 +159,7 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
 
         // GET: ClienteController
-        public static IList<Cliente> GetReportMonth(IList<Mantenimiento> listaMantenimientos)
+        public IList<Cliente> GetReportMonth(IList<Mantenimiento> listaMantenimientos)
         {
             IList<Cliente> listadeClientesReporteAtrasados = new List<Cliente>();
 

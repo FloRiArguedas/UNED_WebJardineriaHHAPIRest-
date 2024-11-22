@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using P2_FloricelaArguedas_WebApplication.Data;
 using P2_FloricelaArguedas_WebApplication.Models;
 using System.Collections.Generic;
 
@@ -10,6 +11,13 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
     [ApiController]
     public class MaquinariaController : ControllerBase
     {
+        private MemoriaMaquinaria memoriaMaquinaria;
+
+        public MaquinariaController(MemoriaMaquinaria Memoriamaquinaria)
+        {
+            memoriaMaquinaria = Memoriamaquinaria;
+        }
+
         // GET: api/<Maquinaria>
         [HttpGet("Index/")]
         public ActionResult <IList<Maquinaria>> Index()
@@ -17,7 +25,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
             try 
             {
                 IList<Maquinaria> listaMaquinaria = new List<Maquinaria>();
-                listaMaquinaria = Data.MemoriaMaquinaria.Index();
+                listaMaquinaria = memoriaMaquinaria.Index();
                 return Ok(listaMaquinaria);
 
             } 
@@ -33,7 +41,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Maquinaria MaquinariaEncontrada = Data.MemoriaMaquinaria.SearchOne(id);
+                Maquinaria MaquinariaEncontrada = memoriaMaquinaria.SearchOne(id);
                 return Ok(MaquinariaEncontrada);
             }
             catch 
@@ -48,7 +56,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Maquinaria NewMachinery = Data.MemoriaMaquinaria.Create(MaquinariaNueva);
+                Maquinaria NewMachinery = memoriaMaquinaria.Create(MaquinariaNueva);
                 return Ok(NewMachinery);
             }
             catch
@@ -63,7 +71,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Maquinaria MaquinariaActualizada = Data.MemoriaMaquinaria.Edit(MaquinariaEditada);
+                Maquinaria MaquinariaActualizada = memoriaMaquinaria.Edit(MaquinariaEditada);
                 return Ok(MaquinariaActualizada);
             }
             catch
@@ -78,7 +86,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Data.MemoriaMaquinaria.Delete(id);
+                memoriaMaquinaria.Delete(id);
                 return Ok();
             }
             catch

@@ -4,17 +4,35 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 {
     public class MemoriaMantenimiento
     {
+        private static BDContexto ContextoBaseDatos;
 
-        public static IList<Mantenimiento> listadeMantenimientos = new List<Mantenimiento>();
+        public MemoriaMantenimiento(BDContexto ctxt)
+        {
+            ContextoBaseDatos = ctxt ?? throw new ArgumentNullException(nameof(ctxt));
+        }
+
+        //Obtengo las listas de la base de datos
+
+        public IList<Mantenimiento> ObtenerListaMantenimientos()
+        {
+            var listaLeidaM = from c in ContextoBaseDatos.Mantenimiento select c;
+            return listaLeidaM.ToList();
+        }
+        public IList<Cliente> ObtenerListaClientes()
+        {
+            var listaLeidaC = from c in ContextoBaseDatos.Cliente select c;
+            return listaLeidaC.ToList();
+        }
 
         // GET: MantenimientoController
-        public static IList<Mantenimiento> Index()
+        public IList<Mantenimiento> Index()
         {
+            IList<Mantenimiento> listadeMantenimientos = ObtenerListaMantenimientos();
             if (!listadeMantenimientos.Any())
             {
                 Mantenimiento mantenimiento = new Mantenimiento
                 {
-                    IdMantenimiento = 1,
+                    Id = 1,
                     IdCliente = 1,
                     FechaEjecutado = new DateTime(2024, 10, 10, 10, 0, 0),
                     FechaAgendado = new DateTime(2024, 11, 12, 10, 0, 0),
@@ -36,15 +54,16 @@ namespace P2_FloricelaArguedas_WebApplication.Data
         }
 
         // GET: MantenimientoController/Details/5
-        public static Mantenimiento SearchOne(int Id)
+        public Mantenimiento SearchOne(int Id)
         {
+            IList<Mantenimiento> listadeMantenimientos = ObtenerListaMantenimientos();
             if (!listadeMantenimientos.Any())
             {
 
                 throw new ArgumentNullException("En este momento no existen Mantenimientos");
                 
             }
-            Mantenimiento MantenimientoALeer = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == Id);
+            Mantenimiento MantenimientoALeer = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.Id == Id);
             if (MantenimientoALeer == null) 
             {
                 throw new KeyNotFoundException($"No se encontró Mantenimiento con el ID {Id}.");
@@ -108,30 +127,31 @@ namespace P2_FloricelaArguedas_WebApplication.Data
         public static void CostoTotal(Mantenimiento MantenimientoNuevo)
         {
 
-            int CostoTotal = (((MantenimientoNuevo.m2Propiedad + MantenimientoNuevo.m2CercaViva) * MantenimientoNuevo.CostoChapiaM2) +
+            float CostoTotal = (((MantenimientoNuevo.m2Propiedad + MantenimientoNuevo.m2CercaViva) * MantenimientoNuevo.CostoChapiaM2) +
                               ((MantenimientoNuevo.m2Propiedad + MantenimientoNuevo.m2CercaViva) * MantenimientoNuevo.CostoProductoM2));
-            double CostoTotalconIVA = CostoTotal + (CostoTotal * 0.13);
-            double CostoTotalconDescuento;
+            float CostoTotalconIVA = (float)(float)(CostoTotal + (CostoTotal * 0.13));
+            float CostoTotalconDescuento;
 
+            
             //SWITCH PARA MANEJAR LOS DESCUENTOS
 
-            switch (MantenimientoNuevo.m2Propiedad) 
+            switch (MantenimientoNuevo.m2Propiedad)
             {
 
                 case int m2Propiedad when (m2Propiedad >= 400 && m2Propiedad <= 900):
-                    CostoTotalconDescuento = CostoTotalconIVA - (CostoTotalconIVA * 0.02); //Descuento del 2%
+                    CostoTotalconDescuento = (float)(float)(CostoTotalconIVA - (CostoTotalconIVA * 0.02)); //Descuento del 2%
                     break;
 
                 case int m2Propiedad when (m2Propiedad >= 901 && m2Propiedad <= 1500):
-                    CostoTotalconDescuento = CostoTotalconIVA - (CostoTotalconIVA * 0.03); //Descuento del 3%
+                    CostoTotalconDescuento = (float)(float)(CostoTotalconIVA - (CostoTotalconIVA * 0.03)); //Descuento del 3%
                     break;
 
                 case int m2Propiedad when (m2Propiedad >= 1501 && m2Propiedad <= 2000):
-                    CostoTotalconDescuento = CostoTotalconIVA - (CostoTotalconIVA * 0.04); //Descuento del 4%
+                    CostoTotalconDescuento = (float)(float)(CostoTotalconIVA - (CostoTotalconIVA * 0.04)); //Descuento del 4%
                     break;
 
                 case int m2Propiedad when (m2Propiedad > 2000):
-                    CostoTotalconDescuento = CostoTotalconIVA - (CostoTotalconIVA * 0.05); //Descuento del 5%
+                    CostoTotalconDescuento = (float)(float)(CostoTotalconIVA - (CostoTotalconIVA * 0.05)); //Descuento del 5%
                     break;
 
                 default:
@@ -140,19 +160,21 @@ namespace P2_FloricelaArguedas_WebApplication.Data
             }
 
             //Envio el precio al atributo del mantenimiento
-                MantenimientoNuevo.CostoTotalMantenimiento = CostoTotalconDescuento;
+            MantenimientoNuevo.CostoTotalMantenimiento = CostoTotalconDescuento;
         }
             
         
         // POST: MantenimientoController/Create
 
-        public static Mantenimiento Create(Mantenimiento MantenimientoNuevo)
+        public Mantenimiento Create(Mantenimiento MantenimientoNuevo)
         {
             //OBTENGO LA LISTA DE CLIENTES Y EXTRAIGO EL QUE SE NECESITA
-            IList<Cliente> ListaClientes = Data.MemoriaCliente.listadeClientes;
+
+            IList<Cliente> ListaClientes = ObtenerListaClientes();
 
             try
             {
+                IList<Mantenimiento> listadeMantenimientos = ObtenerListaMantenimientos();
                 if (MantenimientoNuevo == null)
                 {
                     throw new ArgumentNullException(nameof(MantenimientoNuevo), "El Mantenimiento no puede ser nulo.");
@@ -165,7 +187,8 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                         DiasSinChapia(MantenimientoNuevo);
                         fechaSiguientehapia(ListaClientes, MantenimientoNuevo);
                         CostoTotal(MantenimientoNuevo);
-                        listadeMantenimientos.Add(MantenimientoNuevo);
+                        ContextoBaseDatos.Add(MantenimientoNuevo);
+                        ContextoBaseDatos.SaveChanges();
                     }
                 }
                 return MantenimientoNuevo;
@@ -179,18 +202,20 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: MantenimientoController/Edit/5
 
-        public static Mantenimiento Edit(Mantenimiento MantenimientoEditado)
+        public Mantenimiento Edit(Mantenimiento MantenimientoEditado)
         {
             //OBTENGO LA LISTA DE CLIENTES Y EXTRAIGO EL QUE SE NECESITA
-            IList<Cliente> ListaClientes = Data.MemoriaCliente.listadeClientes;
+
+            IList<Cliente> ListaClientes = ObtenerListaClientes();
             try
             {
+                IList<Mantenimiento> listadeMantenimientos = ObtenerListaMantenimientos();
                 if (!listadeMantenimientos.Any())
                 {
                     throw new ArgumentNullException("En este momento no existen mantenimientos");
                 }
 
-                Mantenimiento MantenimientoAActualizar = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == MantenimientoEditado.IdMantenimiento);
+                Mantenimiento MantenimientoAActualizar = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.Id == MantenimientoEditado.Id);
                 MantenimientoAActualizar.FechaEjecutado = MantenimientoEditado.FechaEjecutado;
                 MantenimientoAActualizar.FechaAgendado = MantenimientoEditado.FechaAgendado;
                 MantenimientoAActualizar.m2Propiedad = MantenimientoEditado.m2Propiedad;
@@ -208,25 +233,31 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                 MantenimientoAActualizar.DiasSinChapia = MantenimientoEditado.DiasSinChapia;
                 MantenimientoAActualizar.FechaSiguienteChapia = MantenimientoEditado.FechaSiguienteChapia;
                 MantenimientoAActualizar.CostoTotalMantenimiento = MantenimientoEditado.CostoTotalMantenimiento;
+
+                ContextoBaseDatos.Update(MantenimientoAActualizar);
+                ContextoBaseDatos.SaveChanges();
+
                 return MantenimientoAActualizar;
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Error al agregar el mantenimiento a la lista.", ex);
+                throw new InvalidOperationException("Error al editar el mantenimiento de la lista.", ex);
             }
         }
 
 
         // POST: MantenimientoController/Delete/5
 
-        public static void Delete(int id)
+        public void Delete(int id)
         {
             try
             {
-                Mantenimiento MantenimientoAEliminar = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.IdMantenimiento == id);
+                IList<Mantenimiento> listadeMantenimientos = ObtenerListaMantenimientos();
+                Mantenimiento MantenimientoAEliminar = listadeMantenimientos.FirstOrDefault(mantenimiento => mantenimiento.Id == id);
                 if (MantenimientoAEliminar != null)
                 {
-                    listadeMantenimientos.Remove(MantenimientoAEliminar);
+                    ContextoBaseDatos.Remove(MantenimientoAEliminar);
+                    ContextoBaseDatos.SaveChanges();
                 }
             }
             catch (Exception ex)

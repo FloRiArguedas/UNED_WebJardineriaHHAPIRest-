@@ -5,17 +5,31 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 {
     public class MemoriaEmpleado
     {
-        public static IList<Empleado> ListadeEmpleados = new List<Empleado>();
+       private BDContexto ContextoBaseDatos;
 
+        public MemoriaEmpleado(BDContexto ctxt)
+        {
+            ContextoBaseDatos = ctxt ?? throw new ArgumentNullException(nameof(ctxt));
+        }
+
+        //Obtengo la lista de la base de datos
+
+        public IList<Empleado> ObtenerLista()
+        {
+            var listaLeida = from c in ContextoBaseDatos.Empleado select c;
+            return listaLeida.ToList();
+        }
 
         // GET: EmpleadoController
-        public static IList<Empleado> Index()
+        public IList<Empleado> Index()
         {
+            IList<Empleado> ListadeEmpleados = ObtenerLista();
+
             if (!ListadeEmpleados.Any())
             {
                 Empleado empleado = new Empleado()
                 {
-                    Cedula = 115420652,
+                    Id = 115420652,
                     FechaNacimiento = new DateTime(1993, 07, 10),
                     Lateralidad = "Zurdo",
                     FechaIngreso = new DateTime(2015, 03, 23),
@@ -27,13 +41,14 @@ namespace P2_FloricelaArguedas_WebApplication.Data
         }
 
         // GET: EmpleadoController/Detalles (LEER)
-        public static Empleado SearchOne(int cedula)
+        public Empleado SearchOne(int Id)
         {
             try
             {
+                IList<Empleado> ListadeEmpleados = ObtenerLista();
                 if (ListadeEmpleados.Any())
                 {
-                    Empleado EmpleadoEncontrado = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == cedula);
+                    Empleado EmpleadoEncontrado = ListadeEmpleados.FirstOrDefault(empleado => empleado.Id == Id);
                     if (EmpleadoEncontrado != null) 
                     {
                         return EmpleadoEncontrado;
@@ -51,15 +66,17 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: EmpleadoController/Create
 
-        public static Empleado Create(Empleado EmpleadoNuevo)
+        public Empleado Create(Empleado EmpleadoNuevo)
         {
             try
             {
+                IList<Empleado> ListadeEmpleados = ObtenerLista();
                 if (EmpleadoNuevo == null)
                 {
                     return null;
                 }
-                ListadeEmpleados.Add(EmpleadoNuevo);
+                ContextoBaseDatos.Empleado.Add(EmpleadoNuevo);
+                ContextoBaseDatos.SaveChanges();
                 return (EmpleadoNuevo);
             }
             catch
@@ -71,17 +88,22 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: EmpleadoController/Editar UPDATE
 
-        public static Empleado Editar(Empleado EmpleadoActualizado)
+        public Empleado Editar(Empleado EmpleadoActualizado)
         {
             try
             {
+                IList<Empleado> ListadeEmpleados = ObtenerLista();
                 if (ListadeEmpleados.Any())
                 {
-                    Empleado EmpleadoAEditar = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == EmpleadoActualizado.Cedula);
+                    Empleado EmpleadoAEditar = ListadeEmpleados.FirstOrDefault(empleado => empleado.Id == EmpleadoActualizado.Id);
                     EmpleadoAEditar.FechaNacimiento = EmpleadoActualizado.FechaNacimiento;
                     EmpleadoAEditar.Lateralidad = EmpleadoActualizado.Lateralidad;
                     EmpleadoAEditar.FechaIngreso = EmpleadoActualizado.FechaIngreso;
                     EmpleadoAEditar.SalarioxHora = EmpleadoActualizado.SalarioxHora;
+
+                    ContextoBaseDatos.Empleado.Update(EmpleadoAEditar);
+                    ContextoBaseDatos.SaveChanges();
+
                     return EmpleadoAEditar;
                 }
                 return null;
@@ -96,15 +118,17 @@ namespace P2_FloricelaArguedas_WebApplication.Data
         // POST: EmpleadoController/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public static void Delete(int id)
+        public void Delete(int id)
         {
             try
             {
-                Empleado EliminarEsteEmpleado = ListadeEmpleados.FirstOrDefault(empleado => empleado.Cedula == id);
+                IList<Empleado> ListadeEmpleados = ObtenerLista();
+                Empleado EliminarEsteEmpleado = ListadeEmpleados.FirstOrDefault(empleado => empleado.Id == id);
 
                 if (EliminarEsteEmpleado != null)
                 {
-                    ListadeEmpleados.Remove(EliminarEsteEmpleado);
+                    ContextoBaseDatos.Empleado.Remove(EliminarEsteEmpleado);
+                    ContextoBaseDatos.SaveChanges();
                 }
 
             }

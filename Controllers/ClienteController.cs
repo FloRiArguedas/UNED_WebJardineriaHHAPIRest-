@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using P2_FloricelaArguedas_WebApplication.Data;
 using P2_FloricelaArguedas_WebApplication.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,6 +10,16 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
+        //Uso la memoria cliente y mantenimiento en este controller
+        private MemoriaCliente memoriaCliente;
+        private MemoriaMantenimiento memoriaMantenimiento;
+
+        public ClienteController(MemoriaCliente Memoriacliente, MemoriaMantenimiento Memoriamantenimiento)
+        {
+            memoriaCliente = Memoriacliente;
+            memoriaMantenimiento = Memoriamantenimiento;
+        }
+
         // GET: api/<ClienteController>
         [HttpGet("Index/")]
         public ActionResult <IList<Cliente>> Index()
@@ -16,7 +27,8 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
             try 
             {
                 IList<Cliente> listaClientes = new List<Cliente>();
-                listaClientes = Data.MemoriaCliente.Index();
+                
+                listaClientes = memoriaCliente.Index();
                 return Ok(listaClientes);
             }
             catch 
@@ -32,7 +44,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Cliente ClienteEncontrado = Data.MemoriaCliente.SearchOne(id);
+                Cliente ClienteEncontrado = memoriaCliente.SearchOne(id);
                 return Ok(ClienteEncontrado);
             }
             catch
@@ -48,7 +60,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Cliente NewClient = Data.MemoriaCliente.Create(ClienteNuevo);
+                Cliente NewClient = memoriaCliente.Create(ClienteNuevo);
                 return Ok(NewClient);
             }
             catch
@@ -66,7 +78,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Cliente ClienteActualizado = Data.MemoriaCliente.Editar(ClienteEditado);
+                Cliente ClienteActualizado = memoriaCliente.Editar(ClienteEditado);
                 return Ok(ClienteActualizado);
             }
             catch
@@ -82,7 +94,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Data.MemoriaCliente.Delete(id);
+                memoriaCliente.Delete(id);
                 return Ok();
             }
             catch
@@ -98,10 +110,10 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
             try
             {
                 IList<Mantenimiento> listaMantenimientos = new List<Mantenimiento>();
-                listaMantenimientos = Data.MemoriaMantenimiento.Index();
+                listaMantenimientos = memoriaMantenimiento.Index();
 
                 IList<Cliente> listaClientesRW = new List<Cliente>();
-                listaClientesRW = Data.MemoriaCliente.GetReportWeek(listaMantenimientos);
+                listaClientesRW = memoriaCliente.GetReportWeek(listaMantenimientos);
                 return Ok(listaClientesRW);
             }
             catch
@@ -119,10 +131,10 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
             try
             {
                 IList<Mantenimiento> listaMantenimientos = new List<Mantenimiento>();
-                listaMantenimientos = Data.MemoriaMantenimiento.Index();
+                listaMantenimientos = memoriaMantenimiento.Index();
 
                 IList<Cliente> listaClientesRM = new List<Cliente>();
-                listaClientesRM = Data.MemoriaCliente.GetReportMonth(listaMantenimientos);
+                listaClientesRM = memoriaCliente.GetReportMonth(listaMantenimientos);
                 return Ok(listaClientesRM);
             }
             catch

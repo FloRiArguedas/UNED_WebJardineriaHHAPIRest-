@@ -103,7 +103,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Cliente, P2-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Cliente, P3-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -123,7 +123,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Cliente, P2-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Cliente, P3-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -143,7 +143,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Cliente, P2-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Cliente, P3-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -257,7 +257,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Empleado, P2-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Empleado, P3-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -371,7 +371,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Mantenimiento, P2-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Mantenimiento, P3-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -485,7 +485,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Maquinaria, P2-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IList\u00601[[P2_FloricelaArguedas_WebApplication.Models.Maquinaria, P3-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -494,26 +494,5 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "P2_FloricelaArguedas_WebApplication.Controllers.WeatherForecastController",
-    "Method": "Get",
-    "RelativePath": "WeatherForecast",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[P2_FloricelaArguedas_WebApplication.WeatherForecast, P2-FloricelaArguedas-WebApplication, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ],
-    "EndpointName": "GetWeatherForecast"
   }
 ]

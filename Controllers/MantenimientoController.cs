@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using P2_FloricelaArguedas_WebApplication.Data;
 using P2_FloricelaArguedas_WebApplication.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,6 +10,13 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
     [ApiController]
     public class MantenimientoController : ControllerBase
     {
+        private MemoriaMantenimiento memoriaMantenimiento;
+
+        public MantenimientoController(MemoriaMantenimiento Memoriamantenimiento)
+        {
+            memoriaMantenimiento = Memoriamantenimiento;
+        }
+
         // GET: api/<Mantenimiento>
         [HttpGet("Index/")]
         public ActionResult<IList<Mantenimiento>> Index()
@@ -16,7 +24,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
             try
             {
                 IList<Mantenimiento> listaMantenimiento = new List<Mantenimiento>();
-                listaMantenimiento = Data.MemoriaMantenimiento.Index();
+                listaMantenimiento = memoriaMantenimiento.Index();
                 return Ok(listaMantenimiento);
             }
             catch
@@ -31,7 +39,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Mantenimiento MantenimientoEncontrado = Data.MemoriaMantenimiento.SearchOne(id);
+                Mantenimiento MantenimientoEncontrado = memoriaMantenimiento.SearchOne(id);
                 return Ok(MantenimientoEncontrado);
             }
             catch
@@ -46,7 +54,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Mantenimiento NewMaintenance = Data.MemoriaMantenimiento.Create(MantenimimentoNuevo);
+                Mantenimiento NewMaintenance = memoriaMantenimiento.Create(MantenimimentoNuevo);
                 return Ok(NewMaintenance);
             }
             catch
@@ -61,7 +69,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Mantenimiento MantenimientoActualizado = Data.MemoriaMantenimiento.Edit(MantenimientoEditado);
+                Mantenimiento MantenimientoActualizado = memoriaMantenimiento.Edit(MantenimientoEditado);
                 return Ok(MantenimientoActualizado);
             }
             catch
@@ -76,7 +84,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try
             {
-                Data.MemoriaMantenimiento.Delete(id);
+                memoriaMantenimiento.Delete(id);
                 return Ok();
             }
             catch

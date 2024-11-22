@@ -2,7 +2,7 @@
 {
     public class Empleado
     {
-        public int Cedula { get; set; }
+        public int Id { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string Lateralidad { get; set; }
         public DateTime FechaIngreso { get; set; }

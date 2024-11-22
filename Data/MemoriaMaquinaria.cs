@@ -4,11 +4,23 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 {
     public class MemoriaMaquinaria
     {
-        public static IList<Maquinaria> listadeMaquinaria = new List<Maquinaria>();
+        private BDContexto ContextoBaseDatos;
+
+        public MemoriaMaquinaria(BDContexto ctxt)
+        {
+            ContextoBaseDatos = ctxt ?? throw new ArgumentNullException(nameof(ctxt));
+        }
+
+        public IList<Maquinaria> ObtenerLista()
+        {
+            var listaLeida = from c in ContextoBaseDatos.Maquinaria select c;
+            return listaLeida.ToList();
+        }
 
         // GET: MaquinariaController
-        public static IList<Maquinaria> Index()
+        public IList<Maquinaria> Index()
         {
+            IList<Maquinaria> listadeMaquinaria = ObtenerLista();
             if (!listadeMaquinaria.Any())
             {
                 Maquinaria maquinaria = new Maquinaria
@@ -26,33 +38,36 @@ namespace P2_FloricelaArguedas_WebApplication.Data
         }
 
         // GET: MaquinariaController/Details/5
-        public static Maquinaria SearchOne(int id)
+        public Maquinaria SearchOne(int id)
         {
-                if (!listadeMaquinaria.Any())
+            IList<Maquinaria> listadeMaquinaria = ObtenerLista();
+            if (!listadeMaquinaria.Any())
                 {
                     throw new ArgumentNullException("En este momento no existe maquinaria");
-                   
                 }
                 Maquinaria MaquinariaALeer = listadeMaquinaria.FirstOrDefault(maquinaria => maquinaria.Id == id);
                 if (MaquinariaALeer == null)
                 {
                     throw new KeyNotFoundException($"No se encontró maquinaria con el ID {id}.");
                 }
-                return MaquinariaALeer;
-                
+                return MaquinariaALeer;     
         }
 
 
         // POST: MaquinariaController/Create
-        public static Maquinaria Create(Maquinaria maquinariaNueva)
+        public Maquinaria Create(Maquinaria maquinariaNueva)
         {
             try
             {
+                IList<Maquinaria> listadeMaquinaria = ObtenerLista();
                 if (maquinariaNueva == null)
                 {
                     throw new ArgumentNullException(nameof(maquinariaNueva), "La maquinaria no puede ser nula.");
                 }
-                listadeMaquinaria.Add(maquinariaNueva);
+
+                ContextoBaseDatos.Add(maquinariaNueva);
+                ContextoBaseDatos.SaveChanges();
+
                 return (maquinariaNueva);
             }
             catch (Exception ex)
@@ -64,10 +79,11 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: MaquinariaController/Edit/5
 
-        public static Maquinaria Edit(Maquinaria MaquinariaEditada)
+        public Maquinaria Edit(Maquinaria MaquinariaEditada)
         {
             try
             {
+                IList<Maquinaria> listadeMaquinaria = ObtenerLista();
                 if (!listadeMaquinaria.Any())
                 {
                     throw new ArgumentNullException("En este momento no existe maquinaria");
@@ -78,6 +94,10 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                 maquinariaAEditar.HorasUsoActual = MaquinariaEditada.HorasUsoActual;
                 maquinariaAEditar.HorasUsoMaximo = MaquinariaEditada.HorasUsoMaximo;
                 maquinariaAEditar.HorasMantenimiento = MaquinariaEditada.HorasMantenimiento;
+
+                ContextoBaseDatos.Update(maquinariaAEditar);
+                ContextoBaseDatos.SaveChanges();
+
                 return (maquinariaAEditar);
             }
             catch (Exception ex)
@@ -89,14 +109,16 @@ namespace P2_FloricelaArguedas_WebApplication.Data
 
         // POST: MaquinariaController/Delete/5
 
-        public static void Delete(int id)
+        public void Delete(int id)
         {
             try
             {
+                IList<Maquinaria> listadeMaquinaria = ObtenerLista();
                 Maquinaria EliminarEstaMaquinaria = listadeMaquinaria.FirstOrDefault(maquinaria => maquinaria.Id == id);
                 if (EliminarEstaMaquinaria != null)
                 {
-                    listadeMaquinaria.Remove(EliminarEstaMaquinaria);
+                    ContextoBaseDatos.Remove(EliminarEstaMaquinaria);
+                    ContextoBaseDatos.SaveChanges();
                 }
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using P2_FloricelaArguedas_WebApplication.Data;
 using P2_FloricelaArguedas_WebApplication.Models;
 using System.Collections.Generic;
 
@@ -10,6 +11,15 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
     [ApiController]
     public class EmpleadoController : ControllerBase
     {
+        //Uso la memoria Empleado en este controller
+        private MemoriaEmpleado memoriaEmpleado;
+
+        public EmpleadoController(MemoriaEmpleado Memoriaempleado)
+        {
+            memoriaEmpleado = Memoriaempleado;
+        }
+
+
         // GET: api/<EmpleadoController>
         [HttpGet("Index/")]
         public ActionResult <IList<Empleado>> Index()
@@ -17,7 +27,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
             try 
             {
                 IList<Empleado> listaEmpleados = new List<Empleado>();
-                listaEmpleados = Data.MemoriaEmpleado.Index();
+                listaEmpleados = memoriaEmpleado.Index();
                 return Ok(listaEmpleados);
             }
             catch
@@ -32,7 +42,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try 
             { 
-                Empleado EmpleadoEncontrado = Data.MemoriaEmpleado.SearchOne(id);
+                Empleado EmpleadoEncontrado = memoriaEmpleado.SearchOne(id);
                 return Ok(EmpleadoEncontrado);
             } 
             catch 
@@ -47,7 +57,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try 
             {
-                Empleado NewEmployee = Data.MemoriaEmpleado.Create(EmpleadoNuevo);
+                Empleado NewEmployee = memoriaEmpleado.Create(EmpleadoNuevo);
                 return Ok(NewEmployee);
             } 
             catch 
@@ -62,7 +72,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try 
             {
-                Empleado EmpleadoActualizado = Data.MemoriaEmpleado.Editar(EmpleadoEditado);
+                Empleado EmpleadoActualizado = memoriaEmpleado.Editar(EmpleadoEditado);
                 return Ok(EmpleadoActualizado);
             }
             catch 
@@ -77,7 +87,7 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
         {
             try 
             {
-                Data.MemoriaEmpleado.Delete(id);
+                memoriaEmpleado.Delete(id);
                 return Ok();
             } 
             catch 
