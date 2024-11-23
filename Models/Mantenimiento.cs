@@ -34,6 +34,6 @@
         public int CostoProductoM2 { get; set; }
 
         //CAMPO AUTOCALCULADO
-        public float CostoTotalMantenimiento { get; set; }
+        public double CostoTotalMantenimiento { get; set; }
     }
 }

@@ -69,3 +69,4 @@ C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P3\P3-FloricelaArguedas-WebAp
 C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P3\P3-FloricelaArguedas-WebApplication\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P3\P3-FloricelaArguedas-WebApplication\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P3\P3-FloricelaArguedas-WebApplication\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\fargu\Documents\Personales\UNED\PrograWeb\P3\P3-FloricelaArguedas-WebApplication\obj\Debug\net7.0\P3-FloricelaArguedas-WebApplication.sourcelink.json

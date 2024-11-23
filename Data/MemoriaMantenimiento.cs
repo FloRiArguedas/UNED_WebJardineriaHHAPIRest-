@@ -127,10 +127,10 @@ namespace P2_FloricelaArguedas_WebApplication.Data
         public static void CostoTotal(Mantenimiento MantenimientoNuevo)
         {
 
-            float CostoTotal = (((MantenimientoNuevo.m2Propiedad + MantenimientoNuevo.m2CercaViva) * MantenimientoNuevo.CostoChapiaM2) +
+            double CostoTotal = (((MantenimientoNuevo.m2Propiedad + MantenimientoNuevo.m2CercaViva) * MantenimientoNuevo.CostoChapiaM2) +
                               ((MantenimientoNuevo.m2Propiedad + MantenimientoNuevo.m2CercaViva) * MantenimientoNuevo.CostoProductoM2));
-            float CostoTotalconIVA = (float)(float)(CostoTotal + (CostoTotal * 0.13));
-            float CostoTotalconDescuento;
+            double CostoTotalconIVA = (CostoTotal + (CostoTotal * 0.13));
+            double CostoTotalconDescuento;
 
             
             //SWITCH PARA MANEJAR LOS DESCUENTOS
@@ -139,19 +139,19 @@ namespace P2_FloricelaArguedas_WebApplication.Data
             {
 
                 case int m2Propiedad when (m2Propiedad >= 400 && m2Propiedad <= 900):
-                    CostoTotalconDescuento = (float)(float)(CostoTotalconIVA - (CostoTotalconIVA * 0.02)); //Descuento del 2%
+                    CostoTotalconDescuento = (CostoTotalconIVA - (CostoTotalconIVA * 0.02)); //Descuento del 2%
                     break;
 
                 case int m2Propiedad when (m2Propiedad >= 901 && m2Propiedad <= 1500):
-                    CostoTotalconDescuento = (float)(float)(CostoTotalconIVA - (CostoTotalconIVA * 0.03)); //Descuento del 3%
+                    CostoTotalconDescuento = (CostoTotalconIVA - (CostoTotalconIVA * 0.03)); //Descuento del 3%
                     break;
 
                 case int m2Propiedad when (m2Propiedad >= 1501 && m2Propiedad <= 2000):
-                    CostoTotalconDescuento = (float)(float)(CostoTotalconIVA - (CostoTotalconIVA * 0.04)); //Descuento del 4%
+                    CostoTotalconDescuento = (CostoTotalconIVA - (CostoTotalconIVA * 0.04)); //Descuento del 4%
                     break;
 
                 case int m2Propiedad when (m2Propiedad > 2000):
-                    CostoTotalconDescuento = (float)(float)(CostoTotalconIVA - (CostoTotalconIVA * 0.05)); //Descuento del 5%
+                    CostoTotalconDescuento = (CostoTotalconIVA - (CostoTotalconIVA * 0.05)); //Descuento del 5%
                     break;
 
                 default:
