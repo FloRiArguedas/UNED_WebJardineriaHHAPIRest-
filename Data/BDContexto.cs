@@ -8,6 +8,8 @@ namespace P2_FloricelaArguedas_WebApplication.Data
         {
               
         }
+
+        //TABLAS BD
         public DbSet<Models.Cliente> Cliente { get; set; }
         public DbSet<Models.Empleado> Empleado { get; set; }
 

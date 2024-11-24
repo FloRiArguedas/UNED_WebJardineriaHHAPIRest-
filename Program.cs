@@ -15,8 +15,10 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+//Registro el contexto como servicio para inyectarlo 
 builder.Services.AddDbContext<P2_FloricelaArguedas_WebApplication.Data.BDContexto>(x => x.UseSqlServer(connectionString));
 
+//Registros de servicios con instancias
 builder.Services.AddScoped<BDContexto>();
 builder.Services.AddScoped<MemoriaCliente>();
 builder.Services.AddScoped<MemoriaEmpleado>();

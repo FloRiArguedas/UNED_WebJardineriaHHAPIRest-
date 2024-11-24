@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using P2_FloricelaArguedas_WebApplication.Models;
 namespace P2_FloricelaArguedas_WebApplication.Data
 {
@@ -69,6 +70,13 @@ namespace P2_FloricelaArguedas_WebApplication.Data
                 throw new KeyNotFoundException($"No se encontró Mantenimiento con el ID {Id}.");
             }
             return (MantenimientoALeer);
+        }
+
+        //GET: MantenimientoController/Create
+        public  IList<int> Create() 
+        {
+            var ListaIDclientes =  ContextoBaseDatos.Cliente.Select(c => c.Id).ToList();
+            return ListaIDclientes;
         }
 
 

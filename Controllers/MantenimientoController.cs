@@ -48,6 +48,21 @@ namespace P2_FloricelaArguedas_WebApplication.Controllers
             }
         }
 
+        //GET: MantenimientoController/Create
+        [HttpGet("Create/")]
+        public ActionResult<IEnumerable<int>> Create()
+        {
+            try
+            {
+                var listaIDsClientes = memoriaMantenimiento.Create();
+                return Ok(listaIDsClientes);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         // POST api/<Mantenimiento>
         [HttpPost("Create/")]
         public ActionResult<Mantenimiento> Create([FromBody] Mantenimiento MantenimimentoNuevo)
